@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import joblib
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
@@ -9,7 +10,6 @@ from sklearn.metrics import accuracy_score, classification_report
 
 def train_fraud_model():
 
-    # Generate demonstration transaction data
     np.random.seed(42)
 
     size = 5000
@@ -23,7 +23,6 @@ def train_fraud_model():
         "failed_attempts": np.random.randint(0, 6, size)
     })
 
-    # Generate demonstration fraud labels
     risk = (
         (data["amount"] > 50000).astype(int) * 2 +
         data["new_receiver"] +
@@ -35,11 +34,9 @@ def train_fraud_model():
 
     data["fraud"] = (risk >= 5).astype(int)
 
-    # Separate features and target
     X = data.drop("fraud", axis=1)
     y = data["fraud"]
 
-    # Split training and testing data
     X_train, X_test, y_train, y_test = train_test_split(
         X, y,
         test_size=0.2,
@@ -47,7 +44,6 @@ def train_fraud_model():
         stratify=y
     )
 
-    # Train Random Forest model
     model = RandomForestClassifier(
         n_estimators=100,
         random_state=42,
@@ -56,7 +52,6 @@ def train_fraud_model():
 
     model.fit(X_train, y_train)
 
-    # Evaluate model
     predictions = model.predict(X_test)
 
     accuracy = accuracy_score(y_test, predictions)
@@ -66,12 +61,14 @@ def train_fraud_model():
 
     print("\nClassification Report:")
     print(classification_report(y_test, predictions))
+
     joblib.dump(model, "fraud_model.pkl")
 
     print("FraudShield AI model saved successfully!")
-     return model
+
+    return model
 
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
     model = train_fraud_model()
 ```
