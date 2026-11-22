@@ -9,6 +9,13 @@ from fraud_detection import (
     scan_message,
     scan_website
 )
+from train_model import train_fraud_model
+
+@st.cache_resource
+def get_model():
+    return train_fraud_model()
+
+model = get_model()
 
 # PAGE CONFIGURATION
 st.set_page_config(
