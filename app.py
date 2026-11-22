@@ -10,7 +10,6 @@ from fraud_detection import (
     scan_website
 )
 from train_model import train_fraud_model
-
 @st.cache_resource
 def get_model():
     return train_fraud_model()
@@ -120,6 +119,7 @@ page = st.sidebar.radio(
     "Navigation",
     [
         "Dashboard",
+        "AI Fraud Prediction",
         "Transaction Protection",
         "SMS Scanner",
         "Website Scanner",
@@ -199,6 +199,51 @@ if page == "Dashboard":
 
 
 # TRANSACTION PROTECTION
+# AI FRAUD PREDICTION
+elif page == "AI Fraud Prediction":
+
+    st.title("🤖 AI Fraud Prediction")
+    st.write("Check whether a transaction may be suspicious.")
+
+    amount = st.number_input("Transaction Amount (₹)", min_value=0.0, value=1000.0)
+
+    new_receiver = st.selectbox("Is this a new receiver?", ["No", "Yes"])
+
+    unusual_activity = st.selectbox("Is this unusual activity?", ["No", "Yes"])
+
+    night_transaction = st.selectbox("Is this a night transaction?", ["No", "Yes"])
+
+    international = st.selectbox("Is this an international transaction?", ["No", "Yes"])
+
+    failed_attempts = st.number_input("Number of failed attempts", min_value=0, step=1)
+
+    if st.button("Predict Fraud Risk"):
+
+        input_data = [[
+            amount,
+            1 if new_receiver == "Yes" else 0,
+            1 if unusual_activity == "Yes" else 0,
+            1 if night_transaction == "Yes" else 0,
+            1 if international == "Yes" else 0,
+            failed_attempts
+        ]]
+
+        prediction = model.predict_proba(input_data)[0][1]
+
+        st.subheader("AI Prediction Result")
+
+        if prediction >= 0.70:
+            st.error("🔴 HIGH RISK – This transaction may be fraudulent.")
+
+        elif prediction >= 0.35:
+            st.warning("🟠 MEDIUM RISK – Please verify this transaction.")
+
+        else:
+            st.success("🟢 LOW RISK – No major warning signs detected.")
+
+        st.metric("Estimated Fraud Risk", f"{prediction * 100:.2f}%")
+
+        st.caption("Demo prediction based on synthetic training data. This is not a verified bank fraud detection system.")
 elif page == "Transaction Protection":
 
     st.header("💳 Transaction Protection")
