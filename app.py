@@ -24,39 +24,78 @@ if "history" not in st.session_state:
 if "alerts" not in st.session_state:
     st.session_state.alerts = []
 
-# DESIGN
 st.markdown("""
 <style>
 
+/* Main background */
 .stApp {
     background-color: #080D0B;
-    color: white;
+    color: #FFFFFF;
 }
 
+/* Main headings */
+h1, h2, h3, h4 {
+    color: #00FF88 !important;
+}
+
+/* Normal text */
+p, label, span, li {
+    color: #FFFFFF !important;
+}
+
+/* Sidebar */
 section[data-testid="stSidebar"] {
     background-color: #101A16;
 }
 
-h1, h2, h3 {
-    color: #00FF88 !important;
+section[data-testid="stSidebar"] * {
+    color: #FFFFFF !important;
 }
 
+/* Input boxes */
+.stTextInput input,
+.stNumberInput input,
+.stTextArea textarea {
+    background-color: #17231D !important;
+    color: #FFFFFF !important;
+    border: 1px solid #00FF88 !important;
+}
+
+/* Buttons */
 .stButton button {
-    background-color: #00FF88;
-    color: black;
-    border-radius: 8px;
+    background-color: #00FF88 !important;
+    color: #000000 !important;
     font-weight: bold;
+    border-radius: 8px;
 }
 
+/* Metrics */
 div[data-testid="stMetric"] {
     background-color: #14231C;
     padding: 15px;
     border-radius: 10px;
 }
 
+div[data-testid="stMetricLabel"] {
+    color: #FFFFFF !important;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #00FF88 !important;
+}
+
+/* Dataframes */
+div[data-testid="stDataFrame"] {
+    color: #FFFFFF;
+}
+
+/* Alerts */
+.stAlert p {
+    color: #FFFFFF !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
-
 
 # HEADER
 st.title("🛡️ FRAUDSHIELD AI")
