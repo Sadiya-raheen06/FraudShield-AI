@@ -1,7 +1,7 @@
 ```python
 import numpy as np
 import pandas as pd
-
+import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
@@ -66,10 +66,12 @@ def train_fraud_model():
 
     print("\nClassification Report:")
     print(classification_report(y_test, predictions))
+    joblib.dump(model, "fraud_model.pkl")
 
-    return model
+    print("FraudShield AI model saved successfully!")
+     return model
 
 
-if __name__ == "__main__":
+    if __name__ == "__main__":
     model = train_fraud_model()
 ```
