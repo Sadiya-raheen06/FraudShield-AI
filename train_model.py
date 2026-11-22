@@ -1,4 +1,3 @@
-```python
 import numpy as np
 import pandas as pd
 import joblib
@@ -71,4 +70,4 @@ def train_fraud_model():
 
 if __name__ == "__main__":
     model = train_fraud_model()
-```
+    
